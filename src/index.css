@@ -1,0 +1,262 @@
+/* --- START OF FILE index.css --- */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* استيراد الخطوط العربية */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap');
+
+
+:root {
+  color-scheme: dark;
+  --primary-bg: #0F0726;
+  --secondary-bg: #1A0F3C;
+  --accent-color: #FFA000; /* برتقالي كهرماني */
+  --accent-color-light: #FFD54F; /* كهرماني أفتح للتوهج */
+  --accent-color-dark: #D17D00; /* كهرماني أغمق */
+  --text-primary: #E2E8F0; /* أبيض مائل للرمادي (tailwind slate-200) */
+  --text-secondary: #A0AEC0; /* رمادي (tailwind gray-500) */
+  --text-ayah: #F0F4F8; /* لون نص الآيات، أكثر بياضًا قليلاً */
+  --highlight-bg: rgba(255, 160, 0, 0.1); /* خلفية التمييز عند التمرير */
+  --selected-bg: rgba(255, 160, 0, 0.15); /* خلفية الآية المحددة */
+  --selected-glow: rgba(255, 180, 50, 0.6); /* توهج الآية المحددة */
+  --ayah-border-hover: rgba(255, 160, 0, 0.3);
+  --ayah-border-selected: rgba(255, 160, 0, 0.5);
+  --solid-accent-button-bg: var(--accent-color); /* لون صلب للزر الرئيسي */
+  --solid-accent-button-text: var(--primary-bg);
+  --solid-accent-button-hover-bg: var(--accent-color-dark);
+}
+
+/* === منع تحديد النص والأرقام بالماوس === */
+* {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* Internet Explorer/Edge */
+  user-select: none;         /* Standard */
+}
+
+/* السماح بالتحديد في حقول الإدخال والنصوص القابلة للتحرير */
+input,
+textarea,
+[contenteditable="true"],
+.selectable {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* السماح بالتحديد في النصوص المهمة مثل القرآن (إذا كنت تريد السماح بنسخها) */
+.quran-text,
+.ayah-segment {
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
+/* منع تحديد الأرقام والأيقونات بشكل خاص */
+.ayah-number-container,
+.no-select {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+
+body {
+  font-family: 'Noto Naskh Arabic', system-ui, sans-serif;
+  direction: rtl; /* ضمان الاتجاه من اليمين لليسار على مستوى الصفحة */
+  background: var(--primary-bg);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* شريط التمرير - تمت إعادته إلى نمط بسيط أو كما كان في الأصل */
+/* إذا كان لديك تخصيص سابق، يمكنك وضعه هنا */
+/* هذا مثال لنمط بسيط جدًا كان موجودًا في النسخ الأولى التي أرسلتها */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px; /* Added for horizontal scrollbars if any */
+}
+::-webkit-scrollbar-track {
+  background: rgba(26, 15, 60, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(26, 15, 60, 0.8); /* كان هذا لونًا داكنًا */
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 15, 60, 1);
+}
+
+
+/* تنسيقات نص القرآن - تحسينات شاملة */
+.quran-text-container {
+  padding: 1rem;
+}
+
+.surah-title-container {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--secondary-bg);
+}
+
+.surah-title {
+  font-family: 'Amiri', 'Scheherazade New', serif; /* خط مميز للعناوين */
+  font-size: 2.8rem; /* أكبر قليلاً */
+  font-weight: 700;
+  color: var(--accent-color-light);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 10px rgba(255, 213, 79, 0.3); /* توهج خفيف */
+}
+
+.bismillah {
+  font-family: 'Amiri', 'Scheherazade New', serif;
+  font-size: 1.8rem; /* حجم مناسب للبسملة */
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+  display: block; /* لضمان أنها في سطر وحدها إذا لزم الأمر */
+}
+
+
+.ayah-segment {
+  display: inline; /* للسماح بالتمييز على مستوى الكلمة/الجزء */
+  font-family: 'Amiri', 'Scheherazade New', serif; /* خط قراءة جميل وواضح */
+  font-size: 26px; /* حجم مناسب للقراءة، يمكن تعديله */
+  line-height: 2.8; /* تباعد أسطر مريح جداً */
+  color: var(--text-ayah);
+  padding: 0.1em 0; /* مساحة صغيرة عمودية حول النص لتأثيرات الخلفية */
+  transition: color 0.3s ease, background-color 0.3s ease, text-shadow 0.3s ease;
+  border-radius: 4px; /* لزوايا دائرية لتأثيرات الخلفية */
+  position: relative; /* للسماح بـ ::before و ::after */
+  cursor: pointer; /* للإشارة إلى التفاعلية */
+}
+
+.ayah-number-container {
+  display: inline-flex; /* لمحاذاة الرقم مع النص */
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Naskh Arabic', sans-serif; /* خط مختلف للأرقام إذا أردت */
+  font-size: 1.1rem; /* أصغر قليلاً من نص الآية */
+  color: var(--accent-color);
+  width: 2.2em; /* عرض ثابت لضمان محاذاة جيدة */
+  height: 2.2em; /* ارتفاع ثابت */
+  line-height: 1; /* لمنع مشاكل ارتفاع السطر */
+  border: 1px solid var(--accent-color-dark);
+  border-radius: 50%;
+  margin: 0 0.5em;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  user-select: none; /* لمنع تحديد رقم الآية */
+  background-color: rgba(255,160,0,0.05);
+}
+
+/* تأثيرات عند مرور الماوس على الآية (النص + الرقم) */
+.ayah-wrapper:hover .ayah-segment {
+  /* لا نحتاج لتغيير لون النص هنا، سيعتمد على الخلفية */
+}
+
+.ayah-wrapper:hover .ayah-number-container {
+  background-color: var(--highlight-bg);
+  border-color: var(--accent-color);
+  color: var(--accent-color-light);
+}
+
+
+/* الآية المحددة (للتفسير أو الصوت) */
+.ayah-selected .ayah-segment {
+  background-color: var(--selected-bg);
+  color: var(--accent-color-light); /* تغيير لون النص للآية المحددة */
+  text-shadow: 0 0 8px var(--selected-glow);
+  position: relative; /* ضروري لـ ::after */
+  z-index: 1;
+}
+
+.ayah-selected .ayah-number-container {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color-light);
+  color: var(--primary-bg); /* لون نص معاكس للخلفية */
+  font-weight: bold;
+}
+
+/* تأثير توهج متحرك للآية المحددة (إضافي) */
+.ayah-selected .ayah-segment::after {
+  content: '';
+  position: absolute;
+  top: -2px; right: -4px; bottom: -2px; left: -4px; /* تغطية مع هامش */
+  border-radius: 6px; /* أكبر قليلاً من border-radius النص */
+  background: radial-gradient(circle at center, rgba(255,180,50,0.3) 0%, transparent 70%);
+  animation: selectedAyahPulse 2s infinite ease-in-out;
+  z-index: -1; /* خلف النص */
+  pointer-events: none;
+}
+
+@keyframes selectedAyahPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 1; }
+}
+
+
+/* فاصل بين الآيات (اختياري) */
+.ayah-separator {
+  display: block; 
+  height: 1px;
+  margin: 0.5em 0; 
+}
+
+/* تلميحات وأزرار التحكم في القارئ */
+.quran-reader-controls {
+  background-color: rgba(26, 15, 60, 0.5); 
+  backdrop-filter: blur(5px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* تحسينات عامة */
+.text-content {
+  line-height: 1.8;
+  letter-spacing: 0.025em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Naskh Arabic', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+/* إخفاء علامة TradingView المائية */
+#tv-attr-logo { display: none !important; visibility: hidden !important; opacity: 0 !important; width: 0 !important; height: 0 !important; overflow: hidden !important; pointer-events: none !important; position: absolute !important; z-index: -1 !important; }
+
+/* Keyframes from original file if needed for other components */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+@keyframes tafsirAppear { from { opacity: 0; transform: translateY(-10px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+
+/* انتقالات عامة */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* ألوان مهام (من الملف الأصلي) - أبقيتها كما هي لاحتمالية استخدامها في أماكن أخرى */
+.bg-purple-500 { background-color: #8B5CF6; } .bg-blue-500   { background-color: #3B82F6; } .bg-green-500  { background-color: #10B981; } .bg-amber-500  { background-color: #F59E0B; } .bg-red-500    { background-color: #EF4444; } .bg-pink-500   { background-color: #EC4899; } .bg-indigo-500 { background-color: #6366F1; } .bg-teal-500   { background-color: #14B8A6; }
+.border-purple-500\/30 { border-color: rgba(139, 92, 246, 0.3); } .border-blue-500\/30   { border-color: rgba(59, 130, 246, 0.3); } .border-green-500\/30  { border-color: rgba(16, 185, 129, 0.3); } .border-amber-500\/30  { border-color: rgba(245, 158, 11, 0.3); } .border-red-500\/30    { border-color: rgba(239, 68, 68, 0.3); } .border-pink-500\/30   { border-color: rgba(236, 72, 153, 0.3); } .border-indigo-500\/30 { border-color: rgba(99, 102, 241, 0.3); } .border-teal-500\/30   { border-color: rgba(20, 184, 166, 0.3); }
+.bg-purple-700 { background-color: #6D28D9; } .bg-blue-700   { background-color: #1D4ED8; } .bg-green-700  { background-color: #047857; } .bg-amber-700  { background-color: #B45309; } .bg-red-700    { background-color: #B91C1C; } .bg-pink-700   { background-color: #BE185D; } .bg-indigo-700 { background-color: #4338CA; } .bg-teal-700   { background-color: #0F766E; }
+
+/* RTL specific for input type date/time if browser styling is an issue */
+input[type="date"], input[type="time"] {
+  text-align: right; /* Ensure text aligns to the right */
+}
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  /* May need to adjust position for RTL or leave as default */
+  /* margin-right: 0.5rem; */ /* Example */
+}
+
+/* --- END OF FILE index.css --- */
